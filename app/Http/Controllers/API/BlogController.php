@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Blog;
+use App\Events\BlogUpdated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -59,6 +60,7 @@ class BlogController extends Controller
             }
             $blog->update($blogUpdateRequest->valslugated());
             DB::commit();
+            event(new BlogUpdated($blog, auth()->user()));
             return $this->responseWithSuccess('Blog Updated Successfully', $blog, Response::HTTP_OK);
         } catch (\Throwable $th) {
             DB::rollBack();

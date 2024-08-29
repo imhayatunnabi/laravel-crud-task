@@ -14,6 +14,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BlogController extends Controller
 {
+    /**
+     * Retrieve a list of blogs based on the search criteria.
+     *
+     * @param Request $request The request object containing search parameters.
+     * @return Response A response with the list of blogs and a success status code.
+     */
     public function index(Request $request)
     {
         $perPage = request()->input('perPage', 20);
@@ -23,6 +29,12 @@ class BlogController extends Controller
             ->orWhere('slug', 'like', '%' . $search . '%')->paginate($perPage);
         return $this->responseWithSuccess('Blog List', $blogs, Response::HTTP_OK);
     }
+    /**
+     * Store a new blog entry in the database.
+     *
+     * @param BlogStoreRequest $blogStoreRequest The request object containing the blog data.
+     * @return Response A response indicating the success or failure of the blog creation.
+     */
     public function store(BlogStoreRequest $blogStoreRequest)
     {
 
@@ -37,6 +49,12 @@ class BlogController extends Controller
             return $this->responseWithError('Blog Creation Failed', [], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+    /**
+     * Retrieve a blog entry based on the provided slug.
+     *
+     * @param string $slug The unique identifier of the blog entry.
+     * @return Response A response indicating the success or failure of finding the blog entry.
+     */
 
     public function edit($slug)
     {
@@ -47,6 +65,13 @@ class BlogController extends Controller
             return $this->responseWithError('Blog Not Found', '', Response::HTTP_NOT_FOUND);
         }
     }
+    /**
+     * Update a specific blog entry in the database based on the provided slug.
+     *
+     * @param BlogUpdateRequest $blogUpdateRequest The request object containing the updated blog data.
+     * @param string $slug The unique identifier of the blog entry to be updated.
+     * @return Response A response indicating the success or failure of the blog update operation.
+     */
     public function update(BlogUpdateRequest $blogUpdateRequest, $slug)
     {
         $blog = Blog::findBySlug($slug);
@@ -68,7 +93,14 @@ class BlogController extends Controller
             return $this->responseWithError('Blog Update Failed', [], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
-    public function destroy($slug){
+    /**
+     * Delete a blog entry from the database based on the provided slug.
+     *
+     * @param string $slug The unique identifier of the blog entry to be deleted.
+     * @return Response A response indicating the success or failure of the blog deletion operation.
+     */
+    public function destroy($slug)
+    {
         $blog = Blog::findBySlug($slug);
         if (!$blog) {
             return $this->responseWithError('Blog Not Found', [], Response::HTTP_NOT_FOUND);

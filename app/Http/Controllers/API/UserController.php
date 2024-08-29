@@ -13,6 +13,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
+    /**
+     * Retrieves a list of users based on the search criteria provided in the request.
+     *
+     * @param Request $request The request object containing search parameters.
+     * @return Response A JSON response with the list of users matching the search criteria.
+     */
     public function index(Request $request)
     {
         $perPage = request()->input('perPage', 20);
@@ -22,6 +28,12 @@ class UserController extends Controller
             ->orWhere('slug', 'like', '%' . $search . '%')->paginate($perPage);
         return $this->responseWithSuccess('User List', $users, Response::HTTP_OK);
     }
+    /**
+     * Store a new user in the database.
+     *
+     * @param UserStoreRequest $userStoreRequest The request containing user data for creation.
+     * @return Response A JSON response indicating the success or failure of user creation.
+     */
     public function store(UserStoreRequest $userStoreRequest)
     {
 
@@ -36,6 +48,12 @@ class UserController extends Controller
             return $this->responseWithError('User Creation Failed', [], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+    /**
+     * Retrieve a user based on the provided slug.
+     *
+     * @param string $slug The unique identifier of the user.
+     * @return Response A JSON response indicating the success or failure of finding the user.
+     */
 
     public function edit($slug)
     {
@@ -46,6 +64,13 @@ class UserController extends Controller
             return $this->responseWithError('User Not Found', '', Response::HTTP_NOT_FOUND);
         }
     }
+    /**
+     * Update a user's information based on the provided user update request and slug.
+     *
+     * @param UserUpdateRequest $userUpdateRequest The request containing updated user data.
+     * @param string $slug The unique identifier (slug) of the user to be updated.
+     * @return Response A JSON response indicating the success or failure of the user update operation.
+     */
     public function update(UserUpdateRequest $userUpdateRequest, $slug)
     {
         $user = User::findBySlug($slug);
@@ -66,7 +91,14 @@ class UserController extends Controller
             return $this->responseWithError('User Update Failed', [], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
-    public function destroy($slug){
+    /**
+     * Delete a user based on the provided slug.
+     *
+     * @param string $slug The unique identifier (slug) of the user to be deleted.
+     * @return Response A JSON response indicating the success or failure of the user deletion operation.
+     */
+    public function destroy($slug)
+    {
         $user = User::findBySlug($slug);
         if (!$user) {
             return $this->responseWithError('User Not Found', [], Response::HTTP_NOT_FOUND);

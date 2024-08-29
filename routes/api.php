@@ -21,14 +21,14 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::group(['prefix' => 'admin', 'middleware' => 'auth:sanctum'], function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::group(['prefix' => 'user'], function () {
+    Route::group(['prefix' => 'user', 'name' => 'user.'], function () {
         Route::get('index', [UserController::class, 'index'])->name('index');
         Route::post('store', [UserController::class, 'store'])->name('store');
         Route::get('edit/{slug}', [UserController::class, 'edit'])->name('edit');
         Route::put('update/{slug}', [UserController::class, 'update'])->name('update');
         Route::get('delete/{slug}', [UserController::class, 'delete'])->name('delete');
     });
-    Route::group(['prefix' => 'blog'], function () {
+    Route::group(['prefix' => 'blog', 'name' => 'blog.'], function () {
         Route::get('index', [BlogController::class, 'index'])->name('index');
         Route::post('store', [BlogController::class, 'store'])->name('store');
         Route::get('edit/{slug}', [BlogController::class, 'edit'])->name('edit');

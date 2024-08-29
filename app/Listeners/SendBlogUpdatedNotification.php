@@ -27,6 +27,6 @@ class SendBlogUpdatedNotification implements ShouldQueue
         $updatingUser = $event->updatingUser;
 
         // Send an email to the user who created the blog post
-        Mail::to($blog->creator->email)->send(new BlogUpdatedMail($blog, $updatingUser));
+        Mail::to($blog->createdBy->email)->send(new BlogUpdatedMail($blog, $updatingUser));
     }
 }

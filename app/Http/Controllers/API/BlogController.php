@@ -80,10 +80,7 @@ class BlogController extends Controller
         }
         try {
             DB::beginTransaction();
-            if (!$blog) {
-                return $this->responseWithError('Blog Not Found', [], Response::HTTP_NOT_FOUND);
-            }
-            $blog->update($blogUpdateRequest->valslugated());
+            $blog->update($blogUpdateRequest->validated());
             DB::commit();
             event(new BlogUpdated($blog, auth()->user()));
             return $this->responseWithSuccess('Blog Updated Successfully', $blog, Response::HTTP_OK);

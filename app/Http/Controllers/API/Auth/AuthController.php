@@ -91,7 +91,7 @@ class AuthController extends Controller
 
     public function logout()
     {
-        $user = auth()->user();
+        $user = User::find(auth()->user()->id);
         if (auth()->user()) {
             $user->currentAccessToken()->delete();
             return $this->responseWithSuccess('User logged out successfully', $user, Response::HTTP_OK);

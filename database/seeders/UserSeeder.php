@@ -61,11 +61,12 @@ class UserSeeder extends Seeder
             for ($i = 1; $i <= 4; $i++) {
                 DB::table('blogs')->insert([
                     'title' => "Blog Post $i by " . $user['name'],
-                    'user_id' => $userId,
                     'slug' => Str::slug("Blog Post $i by " . $user['name']),
                     'description' => "This is a description for blog post $i by " . $user['name'],
                     'created_at' => now(),
                     'updated_at' => now(),
+                    'created_by_id' => $userId,
+                    'updated_by_id' => $userId,
                 ]);
             }
         }

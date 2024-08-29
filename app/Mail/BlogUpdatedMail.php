@@ -31,7 +31,7 @@ class BlogUpdatedMail extends Mailable
                     ->view('emails.blog-updated')
                     ->with([
                         'blogTitle' => $this->blog->title,
-                        'updatingUserName' => $this->updatingUser->name,
+                        'updatingUserName' => $this->blog->updatedBy->name,
                     ]);
     }
 
@@ -51,7 +51,7 @@ class BlogUpdatedMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            // view: 'view.name',
         );
     }
 

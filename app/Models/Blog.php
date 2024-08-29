@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -22,4 +23,15 @@ class Blog extends Model
             ->saveSlugsTo('slug');
     }
     protected $guarded =[];
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($blog) {
+            $blog->created_by_id = Auth::id();
+            $blog->updated_by_id = Auth::id();
+        });
+        static::updating(function ($blog) {
+            $blog->updated_by_id = Auth::id();
+        });
+    }
 }

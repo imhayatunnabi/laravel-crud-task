@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('blogs', function (Blueprint $table) {
             $table->id();
             $table->string('title', 255);
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('restrict');
-            $table->string('slug', 255)->unique();
             $table->text('description')->nullable();
+            $table->string('slug', 255)->unique();
+            $table->foreignId('created_by_id')->references('id')->on('users')->onDelete('restrict');
+            $table->integer('updated_by_id')->nullable();
             $table->timestamps();
         });
     }

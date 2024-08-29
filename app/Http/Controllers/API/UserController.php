@@ -4,13 +4,12 @@ namespace App\Http\Controllers\API;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Http;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
@@ -25,9 +24,9 @@ class UserController extends Controller
     }
     public function store(UserStoreRequest $userStoreRequest)
     {
-        DB::beginTransaction();
 
         try {
+            DB::beginTransaction();
             $user = User::create($userStoreRequest->validated());
             DB::commit();
             return $this->responseWithSuccess('User Created Successfully', $user, Response::HTTP_CREATED);

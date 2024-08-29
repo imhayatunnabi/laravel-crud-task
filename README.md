@@ -64,3 +64,130 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# System Requirements
+
+In order to run a Laravel application, you'll need the following software and tools:
+
+## 1. PHP 8.1
+
+Download and install PHP 8.1 for your specific operating system:
+
+- **Windows**:
+  - [Download PHP 8.1 for Windows](https://windows.php.net/download/)
+
+- **macOS**:
+  - You can use Homebrew: `brew install php@8.1`
+
+- **Linux**:
+  - For Ubuntu/Debian, you can use a PPA:
+
+    ```
+    sudo add-apt-repository ppa:ondrej/php
+    sudo apt update
+    sudo apt install php8.1
+    ```
+
+## 2. Composer (Latest Version)
+
+Download and install the latest version of Composer:
+
+- **Windows**:
+  - [Composer for Windows](https://getcomposer.org/Composer-Setup.exe)
+
+- **macOS/Linux**:
+  - Open your terminal and run:
+
+    ```bash
+    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    php composer-setup.php
+    php -r "unlink('composer-setup.php');"
+    mv composer.phar /usr/local/bin/composer
+    ```
+
+## 3. Choose Your Local Development Environment
+
+You have several options for your local development environment:
+
+### a. XAMPP (Cross-Platform)
+
+- **Download XAMPP**: [XAMPP Downloads](https://www.apachefriends.org/index.html)
+
+### b. LAMP (Linux, Apache, MySQL, PHP)
+
+- You can install LAMP components individually on most Linux distributions.
+
+### c. Laragon (Windows Only)
+
+- **Download Laragon**: [Laragon Downloads](https://laragon.org/download/)
+
+### d. LEMP (Linux, Nginx, MySQL, PHP)
+
+- You can install Nginx, MySQL, and PHP-FPM on your Linux distribution.
+
+## 4. Laravel Application
+
+Clone your Laravel application from a Git repository or copy it to your local environment.
+
+## 5. Configure Laravel
+
+You need to configure your Laravel application to use the PHP version and database provided by your selected environment (XAMPP, LAMP, Laragon, or LEMP). Update your `.env` file to match your environment's settings.
+
+---
+
+With these requirements in place, you should be able to run your Laravel application seamlessly in your chosen development environment. Make sure to follow the documentation of your chosen environment for any additional setup or configuration details.
+
+Enjoy developing your Laravel application!
+
+
+## Installation Process
+
+### Clone the repository
+
+```bash
+git clone git@github.com:neuralwebx/nimbrix_apis.git
+```
+
+```bash
+cd project-directory
+```
+
+### Install Composer
+
+```bash
+composer install
+```
+
+#### If any error occure in composer install then run
+
+```bash
+composer install --ignore-platform-reqs
+```
+
+### Configure Environment variables
+
+```bash
+cp .env.example .env
+```
+
+### Run Artisan Command To Setup the project
+
+```php
+php artisan migrate:fresh --seed
+```
+
+### Serve The project
+
+```bash
+php artisan serve
+```
+
+#### Or if you want to use the host or port [optional](https://www.php.net/manual/en/features.commandline.webserver.php)
+
+```bash
+php artisan serve --host={your_host} --port={your_port}
+```
+#### generate postman api collection
+
+```bash
+php artisan export:postman
+```
